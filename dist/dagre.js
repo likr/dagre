@@ -2341,11 +2341,16 @@ module.exports = rank;
  *       fix them up later.
  */
 function rank(g) {
-  switch(g.graph().ranker) {
-    case "network-simplex": networkSimplexRanker(g); break;
-    case "tight-tree": tightTreeRanker(g); break;
-    case "longest-path": longestPathRanker(g); break;
-    default: networkSimplexRanker(g);
+  var ranker = g.graph().ranker;
+  if (typeof ranker === "function") {
+    ranker(g);
+  } else {
+    switch(ranker) {
+      case "network-simplex": networkSimplexRanker(g); break;
+      case "tight-tree": tightTreeRanker(g); break;
+      case "longest-path": longestPathRanker(g); break;
+      default: networkSimplexRanker(g);
+    }
   }
 }
 
@@ -2899,7 +2904,7 @@ function notime(name, fn) {
 }
 
 },{"./graphlib":7,"./lodash":10}],30:[function(require,module,exports){
-module.exports = "0.6.4";
+module.exports = "0.6.5-pre";
 
 },{}],31:[function(require,module,exports){
 /**
@@ -4031,7 +4036,7 @@ function read(json) {
 
 },{"./graph":46,"./lodash":49}],49:[function(require,module,exports){
 module.exports=require(10)
-},{"/Users/cpettitt/projects/dagre/lib/lodash.js":10,"lodash":51}],50:[function(require,module,exports){
+},{"/Users/likr/work/vizlab/dagre/lib/lodash.js":10,"lodash":51}],50:[function(require,module,exports){
 module.exports = '1.0.1';
 
 },{}],51:[function(require,module,exports){

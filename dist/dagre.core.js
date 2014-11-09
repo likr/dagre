@@ -2341,11 +2341,16 @@ module.exports = rank;
  *       fix them up later.
  */
 function rank(g) {
-  switch(g.graph().ranker) {
-    case "network-simplex": networkSimplexRanker(g); break;
-    case "tight-tree": tightTreeRanker(g); break;
-    case "longest-path": longestPathRanker(g); break;
-    default: networkSimplexRanker(g);
+  var ranker = g.graph().ranker;
+  if (typeof ranker === "function") {
+    ranker(g);
+  } else {
+    switch(ranker) {
+      case "network-simplex": networkSimplexRanker(g); break;
+      case "tight-tree": tightTreeRanker(g); break;
+      case "longest-path": longestPathRanker(g); break;
+      default: networkSimplexRanker(g);
+    }
   }
 }
 
@@ -2899,7 +2904,7 @@ function notime(name, fn) {
 }
 
 },{"./graphlib":7,"./lodash":10}],30:[function(require,module,exports){
-module.exports = "0.6.4";
+module.exports = "0.6.5-pre";
 
 },{}]},{},[1])(1)
 });
